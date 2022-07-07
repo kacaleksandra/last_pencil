@@ -22,53 +22,57 @@ def ask_and_correct(answer, flag):
         else:
             return answer
 
-print("How many pencils would you like to use: ")
-userchoice = input()
-userchoice = int(ask_and_correct(userchoice, True))
+def main():
+    print("How many pencils would you like to use: ")
+    userchoice = input()
+    userchoice = int(ask_and_correct(userchoice, True))
 
-person = True
-print("Who will be the first (Ola, Mateusz): ")
-who_first = input()
-if who_first == "Mateusz":
-    person = False
-while who_first != "Ola" and who_first != "Mateusz":
-    print("Choose between Ola and Mateusz")
+    person = True
+    print("Who will be the first (Ola, Mateusz): ")
     who_first = input()
-    if who_first == "Ola":
-        person = True
-    elif who_first == "Mateusz":
+    if who_first == "Mateusz":
         person = False
-print(userchoice * "|")
-while userchoice > 0:
-    if not person:
-        print("Mateusz's turn")
-# bot strategy
-# winning strategy
-        if userchoice % 4 == 0:
-            to_delete = 3
-        elif userchoice % 4 == 3:
-            to_delete = 2
-        elif userchoice % 4 == 2:
-            to_delete = 1
-        else:
-            to_delete = random.randint(1,3)
-            while to_delete > userchoice:
+    while who_first != "Ola" and who_first != "Mateusz":
+        print("Choose between Ola and Mateusz")
+        who_first = input()
+        if who_first == "Ola":
+            person = True
+        elif who_first == "Mateusz":
+            person = False
+    print(userchoice * "|")
+    while userchoice > 0:
+        if not person:
+            print("Mateusz's turn")
+    # bot strategy
+    # winning strategy
+            if userchoice % 4 == 0:
+                to_delete = 3
+            elif userchoice % 4 == 3:
+                to_delete = 2
+            elif userchoice % 4 == 2:
+                to_delete = 1
+            else:
                 to_delete = random.randint(1,3)
-        print(to_delete)
+                while to_delete > userchoice:
+                    to_delete = random.randint(1,3)
+            print(to_delete)
+        else:
+            print("Ola's turn")
+            to_delete = input()
+            to_delete = int(ask_and_correct(to_delete, False))
+        person = not person
+        while to_delete > userchoice:
+            print("too many pencils")
+            to_delete = input()
+            to_delete = int(ask_and_correct(to_delete, False))
+        userchoice = userchoice - to_delete
+        if userchoice > 0:
+            print(userchoice * "|")
     else:
-        print("Ola's turn")
-        to_delete = input()
-        to_delete = int(ask_and_correct(to_delete, False))
-    person = not person
-    while to_delete > userchoice:
-        print("too many pencils")
-        to_delete = input()
-        to_delete = int(ask_and_correct(to_delete, False))
-    userchoice = userchoice - to_delete
-    if userchoice > 0:
-        print(userchoice * "|")
-else:
-    if not person:
-        print("Mateusz won!")
-    else:
-        print("Ola won!")
+        if not person:
+            print("Mateusz won!")
+        else:
+            print("Ola won!")
+
+if __name__ == '__main__':
+    main()
